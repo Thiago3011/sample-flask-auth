@@ -2,10 +2,13 @@ from flask import Flask, request, jsonify
 from models.user import User
 from database import db
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
+import os
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "your_secret_key"
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
+app.config['SECRET_KEY'] = 'your_secret_key'
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'instance', 'database.db')}"
 
 login_manager = LoginManager()
 db.init_app(app)
